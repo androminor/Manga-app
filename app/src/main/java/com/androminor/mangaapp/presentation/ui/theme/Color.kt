@@ -1,4 +1,4 @@
-package com.androminor.mangaapp.ui.theme
+package com.androminor.mangaapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

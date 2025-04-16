@@ -2,4 +2,8 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false // Important: declare with apply false'
+    alias(libs.plugins.hilt.android.plugin) apply false
+
+
 }
