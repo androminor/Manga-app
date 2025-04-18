@@ -13,10 +13,10 @@ class SignInUseCase @Inject constructor(private val userRepository: UserReposito
     suspend operator fun invoke(email: String, password: String): Result<User> {
      val user  = userRepository.getUserByEmail(email)
         return when{
-            user == null ->Result.failure(Exception("not found"))
+            user == null ->Result.failure(Exception("User not found. Please sign up."))
             user.password != password -> Result.failure(Exception("Wrong password"))
             else -> {
-                userRepository.logOutUser()
+                userRepository.logOutUser(user)
                 userRepository.saveLoggedUser(user)
                 Result.success(user)
             }

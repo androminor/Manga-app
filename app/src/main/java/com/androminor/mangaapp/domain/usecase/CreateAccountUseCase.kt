@@ -19,7 +19,7 @@ class CreateAccountUseCase @Inject constructor(private val userRepository:UserRe
             val user  = User(email = email, password = password)
             val id = userRepository.insertUser(user)
             val newUser = user.copy(id = id)
-            userRepository.logOutUser()
+            userRepository.logOutUser(user)
             userRepository.saveLoggedUser(newUser)
             Result.success(newUser)
         }

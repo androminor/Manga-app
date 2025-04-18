@@ -14,4 +14,5 @@ sealed interface BehaviouralEvent : SignInEvent {
     data object ForgetPassword : BehaviouralEvent
     data object GoogleSignIn : BehaviouralEvent
     data object AppleSignIn : BehaviouralEvent
+    data object SignUp:BehaviouralEvent
 }

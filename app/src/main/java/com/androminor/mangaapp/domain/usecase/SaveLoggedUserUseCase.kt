@@ -9,7 +9,6 @@ import javax.inject.Inject
  */
 class SaveLoggedUserUseCase @Inject constructor(private val userRepository: UserRepository) {
     suspend operator fun invoke(user: User) {
-        userRepository.logOutUser()
         userRepository.saveLoggedUser(user)
     }
 }

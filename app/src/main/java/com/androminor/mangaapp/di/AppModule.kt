@@ -52,4 +52,5 @@ class AppModule {
     fun provideLogOutUseCase(repository: UserRepository):LogOutUseCase {
         return LogOutUseCase(repository)
     }
+
 }

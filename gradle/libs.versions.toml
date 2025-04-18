@@ -2,6 +2,7 @@
 activityComposeVersion = "1.10.1"
 agp = "8.6.1"
 androidxComposeBom = "2025.04.00"
+compose = "1.7.8"
 androidxJunit = "1.2.1"
 cameraxVersion = "1.4.2"
 coilCompose = "2.7.0"
@@ -12,7 +13,7 @@ espressoCoreVersion = "3.6.1"
 hiltAndroid = "2.56"
 hiltAndroidCompiler = "2.52"
 hiltNavigationComposeVersion = "1.2.0"
-kotlin = "2.1.0"
+kotlin = "2.1.20"
 junit = "4.13.2"
 kotlinxCoroutinesAndroid = "1.10.1"
 kotlinxCoroutinesCore = "1.10.1"
@@ -27,18 +28,23 @@ roomCompilerVersion = "2.7.0"
 roomKtxVersion = "2.7.0"
 roomRuntimeVersion = "2.7.0"
 tasksVision = "latest.release"
+hilt_navigation_compose = "1.2.0"
 
 
 
 [libraries]
 androidx-activity-compose-v172 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraxVersion" }
+#noinspection SimilarGradleDependency
 androidx-compose-bom-v20230300 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
+#noinspection SimilarGradleDependency
 androidx-compose-bom-v20250400 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
 androidx-core-ktx-v1101 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
 androidx-espresso-core-v351 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+#noinspection SimilarGradleDependency
 androidx-hilt-navigation-compose-v100 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
 androidx-junit-v115 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 androidx-lifecycle-runtime-ktx-v261 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
@@ -51,6 +57,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+#noinspection SimilarGradleDependency
 hilt-android-v244 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }  # Added Glide
@@ -68,13 +75,19 @@ ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+#noinspection SimilarGradleDependency
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+#noinspection SimilarGradleDependency
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt_navigation_compose" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+#noinspection SimilarGradleDependency
+#noinspection SimilarGradleDependency
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+#noinspection SimilarGradleDependency
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt_android_plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

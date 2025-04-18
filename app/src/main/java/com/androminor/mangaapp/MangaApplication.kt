@@ -1,3 +1,5 @@
+package com.androminor.mangaapp
+
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 

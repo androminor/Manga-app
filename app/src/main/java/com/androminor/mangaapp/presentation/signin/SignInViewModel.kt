@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.androminor.mangaapp.domain.usecase.CheckUserLoginStatusUseCase
 import com.androminor.mangaapp.domain.usecase.CreateAccountUseCase
 import com.androminor.mangaapp.domain.usecase.SignInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 /**
  * Created by Varun Singh
  */
+@HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val createAccountUseCase: CreateAccountUseCase,
@@ -23,7 +25,7 @@ class SignInViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInState())
-    private val state: StateFlow<SignInState> = _state.asStateFlow()
+     val state: StateFlow<SignInState> = _state.asStateFlow()
 
     private val _isSignInSuccessful = MutableStateFlow(false)
     val isSignInSuccessful: StateFlow<Boolean> = _isSignInSuccessful.asStateFlow()
@@ -63,6 +65,65 @@ class SignInViewModel @Inject constructor(
             is BehaviouralEvent.AppleSignIn -> {
                 //future work
             }
+            is BehaviouralEvent.SignUp -> {
+                signUp()
+            }
+        }
+    }
+
+    private fun signUp() {
+        val email = state.value.email
+        val password = state.value.password
+        if (email.isBlank()) {
+            _state.update { it.copy(error = "Email cannot be empty") }
+            return
+        }
+        if (password.isBlank()) {
+            _state.update { it.copy(error = "Password cannot be empty") }
+            return
+        }
+        _state.update { it.copy(isLoading = true, error = null) }
+        viewModelScope.launch {
+            try {
+                val result = createAccountUseCase(email, password)
+                if (result.isSuccess) {
+                    //updating the state
+                    _isSignInSuccessful.value = true
+                } else {
+                    when (result.exceptionOrNull()?.message) {
+                        "User already exists" -> {
+                            _state.update {
+                                it.copy(
+                                    error = "Account already exist",
+                                    isLoading = false
+
+                                )
+                            }
+
+                        }
+
+                        else -> _state.update {
+                            it.copy(
+                                error = result.exceptionOrNull()?.message
+                                    ?: "Failed to create account",
+                                isLoading = false
+                            )
+                        }
+                    }
+                }
+            } catch (e: CancellationException) {
+//Propagating cancellation if occurred so that coroutine is cancelled nicely
+                throw e
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(
+                        error = e.message ?: "Unknown exception",
+                        isLoading = false
+                    )
+                }
+            } finally {
+                _state.update { it.copy(isLoading = false) }
+            }
         }
     }
 
@@ -87,20 +148,21 @@ class SignInViewModel @Inject constructor(
                     _isSignInSuccessful.value = true
                 } else {
                     when (result.exceptionOrNull()?.message) {
-                        "User not their" -> {
-                            val createAccountResult = createAccountUseCase(email, password)
-                            if (createAccountResult.isSuccess) {
+                        "User not found. Please sign up." -> {
+                           // val createAccountResult = createAccountUseCase(email, password)
+                           /* if (createAccountResult.isSuccess) {
                                 _isSignInSuccessful.value = true
-                            } else {
+                            } else {*/
                                 _state.update {
-                                    it.copy(
+                                    it.copy(/*
                                         error = createAccountResult.exceptionOrNull()?.message
-                                            ?: "Failed to create account",
+                                            ?: "Failed to create account",*/
+                                        error = "Email not found.Please Sign up.",
                                         isLoading = false
 
                                     )
                                 }
-                            }
+                           // }
                         }
 
                         else -> _state.update {

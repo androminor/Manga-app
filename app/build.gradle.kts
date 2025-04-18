@@ -64,6 +64,7 @@ android {
 
 
 dependencies {
+    val compose_version = "1.5.0"
 
     // Core Android
     implementation(libs.androidx.core.ktx.v1101)
@@ -78,15 +79,16 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.androidx.material)
-
+    implementation(libs.material.icons.extended)
     // Navigation
     implementation(libs.androidx.navigation.compose)
-
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     // Hilt
     implementation(libs.hilt.android.v244)
-    kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose.v100)
-
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     // Room
     implementation(libs.androidx.room.runtime)
     //noinspection KaptUsageInsteadOfKsp
@@ -122,6 +124,8 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
+
 }
 // Allow references to generated code
 kapt {

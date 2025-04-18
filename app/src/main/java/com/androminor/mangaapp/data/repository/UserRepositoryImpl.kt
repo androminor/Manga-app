@@ -41,7 +41,7 @@ class UserRepositoryImpl @Inject constructor(private val localDataSource: LocalU
         return localDataSource.isAnyUserLoggedIn()
     }
 
-    override suspend fun logOutUser() {
+    override suspend fun logOutUser(user:User) {
 
         return localDataSource.logOutUser()
     }

@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">MangaApp</string>
+    <string name="app_name">Zenithra</string>
+    <string name="zenithra">Zenithra</string>
+    <string name="close">Close</string>
+    <string name="please_enter_your_details_to_sign_in">Please enter your details to sign in</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_with_apple">Sign in with Apple</string>
+    <string name="or">OR</string>
+    <string name="your_email_address">Your Email Address</string>
+    <string name="password">Password</string>
+    <string name="toggle_password">Toggle password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account">"Don't have an account? "</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="face">Face</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="welcome_to_zenithra">Welcome to Zenithra!</string>
+    <string name="manga">Manga</string>
 </resources>

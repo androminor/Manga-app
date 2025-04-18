@@ -9,6 +9,6 @@ interface UserRepository {
     fun getLoggedInUser(): Flow<User?>
     suspend fun saveLoggedUser(user:User)
     suspend fun isUserLoggedIn():Boolean
-    suspend fun logOutUser()
+    suspend fun logOutUser(user:User)
 
 }
