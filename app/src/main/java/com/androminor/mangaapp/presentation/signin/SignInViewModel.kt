@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Created by Varun Singh
  */
 @HiltViewModel
-class SignInViewModel @Inject constructor(
+open class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val createAccountUseCase: CreateAccountUseCase,
     private val checkUserLoginStatusUseCase: CheckUserLoginStatusUseCase

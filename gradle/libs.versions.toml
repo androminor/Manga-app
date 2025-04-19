@@ -29,10 +29,14 @@ roomKtxVersion = "2.7.0"
 roomRuntimeVersion = "2.7.0"
 tasksVision = "latest.release"
 hilt_navigation_compose = "1.2.0"
+compose-ui = "1.0.0"
+
 
 
 
 [libraries]
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose-ui" }
+androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose-ui" }
 androidx-activity-compose-v172 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }

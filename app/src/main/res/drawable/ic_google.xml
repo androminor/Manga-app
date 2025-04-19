@@ -1,5 +1,32 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="#000000" android:viewportHeight="24" android:viewportWidth="24" android:width="24dp">
-        
-    <path android:fillColor="#FF000000" android:pathData="M17.6,11.48 L19.44,8.3a0.63,0.63 0,0 0,-1.09 -0.63l-1.88,3.24a11.43,11.43 0,0 0,-8.94 0L5.65,7.67a0.63,0.63 0,0 0,-1.09 0.63L6.4,11.48A10.81,10.81 0,0 0,1 20L23,20A10.81,10.81 0,0 0,17.6 11.48ZM7,17.25A1.25,1.25 0,1 1,8.25 16,1.25 1.25,0 0,1 7,17.25ZM17,17.25A1.25,1.25 0,1 1,18.25 16,1.25 1.25,0 0,1 17,17.25Z"/>
-    
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="80dp"
+    android:height="80dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+
+    <!-- Dark Gray Circular Background -->
+    <path
+        android:pathData="M20,0C31.046,0 40,8.954 40,20C40,31.046 31.046,40 20,40C8.954,40 0,31.046 0,20C0,8.954 8.954,0 20,0Z"
+      /> <!-- Dark gray -->
+
+    <!-- Google G logo with original colors -->
+    <group
+    android:scaleX="1.5"
+    android:scaleY="1.5"
+    android:translateX="5"
+    android:translateY="5">
+        <path
+            android:pathData="M19.6,10.227C19.6,9.518 19.536,8.836 19.418,8.182H10V12.05H15.382C15.15,13.3 14.445,14.359 13.386,15.068V17.577H16.618C18.509,15.836 19.6,13.273 19.6,10.227Z"
+            android:fillColor="#4285F4"/>
+        <path
+            android:pathData="M10,20C12.7,20 14.964,19.104 16.618,17.577L13.386,15.068C12.491,15.668 11.345,16.023 10,16.023C7.395,16.023 5.191,14.264 4.405,11.9H1.064V14.491C2.709,17.759 6.091,20 10,20Z"
+            android:fillColor="#34A853"/>
+        <path
+            android:pathData="M4.405,11.9C4.205,11.3 4.091,10.659 4.091,10C4.091,9.341 4.205,8.7 4.405,8.1V5.509H1.064C0.386,6.859 0,8.386 0,10C0,11.614 0.386,13.141 1.064,14.491L4.405,11.9Z"
+            android:fillColor="#FBBC04"/>
+        <path
+            android:pathData="M10,3.977C11.468,3.977 12.786,4.482 13.823,5.473L16.691,2.604C14.959,0.991 12.695,0 10,0C6.091,0 2.709,2.241 1.064,5.509L4.405,8.1C5.191,5.736 7.395,3.977 10,3.977Z"
+            android:fillColor="#E94235"/>
+    </group>
+
 </vector>

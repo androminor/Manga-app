@@ -125,6 +125,9 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.util)
+
 
 }
 // Allow references to generated code

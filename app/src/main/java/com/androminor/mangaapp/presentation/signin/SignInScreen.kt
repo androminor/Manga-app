@@ -2,6 +2,7 @@ package com.androminor.mangaapp.presentation.signin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -68,7 +69,7 @@ fun SignInScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(Color(0xFF121212))
     ) {
         //close button
         Icon(imageVector = Icons.Default.Close,
@@ -79,209 +80,232 @@ fun SignInScreen(
                 .align(Alignment.TopStart)
                 .clickable { //later action will be handled
                 })
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp)
-                .align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.zenithra),
-                color = Color.White,
-                fontSize = 23.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = stringResource(R.string.please_enter_your_details_to_sign_in),
-                color = Color.White.copy(alpha = 0.7f),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(top = 4.dp, bottom = 24.dp)
-            )
-            //Social
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                //Google signin
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(Color.DarkGray)
-                        .clickable { viewModel.onEvent(BehaviouralEvent.GoogleSignIn) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_google),
-                        contentDescription = stringResource(R.string.sign_in_with_google),
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-
-                //Apple signin
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(Color.DarkGray)
-                        .clickable { viewModel.onEvent(BehaviouralEvent.AppleSignIn) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_apple),
-                        contentDescription = stringResource(R.string.sign_in_with_apple),
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-            // or divider
-            Row(
+                .fillMaxWidth(
+                    (0.9f)
+                )
+                .padding(vertical = 32.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFF252525))
+                .align(Alignment.Center)
+        ){
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 24.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(horizontal = 32.dp, vertical = 32.dp)
+                    .align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Divider(
-                    modifier = Modifier.weight(1f),
-                    color = Color.DarkGray
-                )
                 Text(
-                    text = stringResource(R.string.or),
+                    text = stringResource(R.string.zenithra),
                     color = Color.White,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    fontSize = 23.sp,
+                    fontWeight = FontWeight.Light
                 )
-                Divider(
-                    modifier = Modifier.weight(1f),
-                    color = Color.DarkGray
-                )
-            }
-            //Email input fields
-            OutlinedTextField(
-                value = state.email,
-                onValueChange = { viewModel.onEvent(StatefulEvent.EmailChanged(it)) },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.your_email_address)) },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = Color.White,
-                    backgroundColor = Color.Transparent,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray,
-                    placeholderColor = Color.Gray
-                ),
-                shape = RoundedCornerShape(8.dp),
-                singleLine = true
-
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            //Password input fields
-            OutlinedTextField(
-                value = state.password,
-                onValueChange = { viewModel.onEvent(StatefulEvent.PasswordChanged(it)) },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.password)) },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                visualTransformation = if (state.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    val icon =
-                        if (state.isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                    IconButton(onClick = { viewModel.onEvent(BehaviouralEvent.TogglePasswordVisibility) }) {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = stringResource(R.string.toggle_password),
-                            tint = Color.Gray
-                        )
-
-                    }
-
-
-                },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = Color.White,
-                    backgroundColor = Color.Transparent,
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray,
-                    placeholderColor = Color.Gray
-                ),
-                shape = RoundedCornerShape(8.dp),
-                singleLine = true
-
-            )
-            //Forgot password
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Text(text = "Forgot password?",
-                    color = Color.Gray,
-                    fontSize = 14.sp,
-                    modifier = Modifier.clickable { viewModel.onEvent(BehaviouralEvent.ForgetPassword) })
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-
-            //Sign in button
-            Button(
-                onClick = { viewModel.onEvent(BehaviouralEvent.SignIn) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray
-                )
-
-            ) {
-                if (state.isLoading) {
-                    CircularProgressIndicator(
-                        color = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                } else {
-                    Text(stringResource(R.string.sign_in))
-                }
-
-            }
-            //Error msg
-            if(state.error !=null){
-                Text(text = state.error!!,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 16.dp)
-                    )
-            }
-            //Create account option
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-                ) {
-                Text(
-                    text = stringResource(R.string.don_t_have_an_account),
-                    color = Color.Gray,
-                    fontSize = 14.sp
-                )
-                Text(text = stringResource(R.string.sign_up),
+                Text(text = "Welcome back",
                     color = Color.White,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    modifier = Modifier.clickable {
-                        viewModel.onEvent(BehaviouralEvent.SignUp)
-                    }
+                    modifier = Modifier.padding(top =8.dp))
+                Text(
+                    text = stringResource(R.string.please_enter_your_details_to_sign_in),
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Light,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 24.dp)
                 )
+                //Social
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    //Google signin
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color.Gray.copy(alpha = 0.5f), CircleShape)
+                            .background(Color.Transparent)
+                            .clickable { viewModel.onEvent(BehaviouralEvent.GoogleSignIn) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_google),
+                            contentDescription = stringResource(R.string.sign_in_with_google),
+                            modifier = Modifier.size(24.dp)
+
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    //Apple signin
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color.Gray.copy(alpha = 0.5f), CircleShape)
+                            .background(Color.Transparent)
+                            .clickable { viewModel.onEvent(BehaviouralEvent.AppleSignIn) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_apple),
+                            contentDescription = stringResource(R.string.sign_in_with_apple),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+                // or divider
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Divider(
+                        modifier = Modifier.weight(1f),
+                        color = Color.DarkGray
+                    )
+                    Text(
+                        text = stringResource(R.string.or),
+                        color = Color.White,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Divider(
+                        modifier = Modifier.weight(1f),
+                        color = Color.DarkGray
+                    )
+                }
+                //Email input fields
+                OutlinedTextField(
+                    value = state.email,
+                    onValueChange = { viewModel.onEvent(StatefulEvent.EmailChanged(it)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text(stringResource(R.string.your_email_address)) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.White,
+                        backgroundColor = Color.Transparent,
+                        focusedLabelColor = Color.White,
+                        unfocusedLabelColor = Color.Gray,
+                        placeholderColor = Color.Gray
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    singleLine = true
+
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                //Password input fields
+                OutlinedTextField(
+                    value = state.password,
+                    onValueChange = { viewModel.onEvent(StatefulEvent.PasswordChanged(it)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text(stringResource(R.string.password)) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    visualTransformation = if (state.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val icon =
+                            if (state.isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                        IconButton(onClick = { viewModel.onEvent(BehaviouralEvent.TogglePasswordVisibility) }) {
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = stringResource(R.string.toggle_password),
+                                tint = Color.Gray
+                            )
+
+                        }
+
+
+                    },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.White,
+                        backgroundColor = Color(0xFF303030),
+                        focusedLabelColor = Color.Transparent,
+                        unfocusedLabelColor = Color.Transparent,
+                        placeholderColor = Color.Gray
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    singleLine = true
+
+                )
+                //Forgot password
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    Text(text = "Forgot password?",
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        modifier = Modifier.clickable { viewModel.onEvent(BehaviouralEvent.ForgetPassword) })
+                }
+                Spacer(modifier = Modifier.height(24.dp))
+
+                //Sign in button
+                Button(
+                    onClick = { viewModel.onEvent(BehaviouralEvent.SignIn) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(24.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF505050)
+                    )
+
+                ) {
+                    if (state.isLoading) {
+                        CircularProgressIndicator(
+                            color = Color.White,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    } else {
+                        Text(stringResource(R.string.sign_in))
+                    }
+
+                }
+                //Error msg
+                if (state.error != null) {
+                    Text(
+                        text = state.error!!,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                }
+                //Create account option
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.don_t_have_an_account),
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                    Text(text = stringResource(R.string.sign_up),
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        modifier = Modifier.clickable {
+                            viewModel.onEvent(BehaviouralEvent.SignUp)
+                        }
+                    )
+                }
             }
         }
+
     }
 }

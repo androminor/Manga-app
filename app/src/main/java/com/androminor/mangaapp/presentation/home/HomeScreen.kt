@@ -1,5 +1,6 @@
 package com.androminor.mangaapp.presentation.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +20,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +37,7 @@ import com.androminor.mangaapp.R
 enum class HomeScreenTab {
     MANGA, FACE
 }
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
@@ -45,12 +46,11 @@ fun HomeScreen(
     var selectedTab by remember { mutableStateOf(HomeScreenTab.MANGA) }
     val isLoggedOut by viewModel.isLoggedOut
 
-    LaunchedEffect(isLoggedOut) {
         if (isLoggedOut) {
             Log.d("HomeScreen", "Detected logout state, navigating to sign in")
             onSignOut()
             viewModel.resetLogOut()
-        }
+
     }
 
     Scaffold(
