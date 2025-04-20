@@ -2,7 +2,8 @@ package com.androminor.mangaapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.androminor.mangaapp.data.local.AppDatabase
+import com.androminor.mangaapp.data.AppDatabase
+import com.androminor.mangaapp.data.local.dao.MangaDao
 import com.androminor.mangaapp.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -30,7 +31,13 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesUserDao(appDatabase:AppDatabase):UserDao {
+    fun providesUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMangaDao(appDatabase: AppDatabase): MangaDao {
+        return appDatabase.mangaDao()
     }
 }

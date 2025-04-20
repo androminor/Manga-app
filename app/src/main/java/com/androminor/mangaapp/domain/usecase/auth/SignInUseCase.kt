@@ -1,4 +1,4 @@
-package com.androminor.mangaapp.domain.usecase
+package com.androminor.mangaapp.domain.usecase.auth
 
 import android.annotation.SuppressLint
 import com.androminor.mangaapp.domain.model.User

@@ -50,12 +50,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.androminor.mangaapp.R
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SignInScreen(
-    viewModel: SignInViewModel,
+    viewModel: SignInViewModel = hiltViewModel(),
     onNavigatingHome: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()

@@ -1,4 +1,4 @@
-package com.androminor.mangaapp.domain.usecase
+package com.androminor.mangaapp.domain.usecase.auth
 
 import com.androminor.mangaapp.domain.repository.UserRepository
 import javax.inject.Inject

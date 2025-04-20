@@ -1,4 +1,4 @@
-package com.androminor.mangaapp.domain.usecase
+package com.androminor.mangaapp.domain.usecase.auth
 
 import android.annotation.SuppressLint
 import com.androminor.mangaapp.domain.model.User
@@ -19,7 +19,6 @@ class CreateAccountUseCase @Inject constructor(private val userRepository:UserRe
             val user  = User(email = email, password = password)
             val id = userRepository.insertUser(user)
             val newUser = user.copy(id = id)
-            userRepository.logOutUser(user)
             userRepository.saveLoggedUser(newUser)
             Result.success(newUser)
         }

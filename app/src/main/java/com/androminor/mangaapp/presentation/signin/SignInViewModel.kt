@@ -2,9 +2,9 @@ package com.androminor.mangaapp.presentation.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.androminor.mangaapp.domain.usecase.CheckUserLoginStatusUseCase
-import com.androminor.mangaapp.domain.usecase.CreateAccountUseCase
-import com.androminor.mangaapp.domain.usecase.SignInUseCase
+import com.androminor.mangaapp.domain.usecase.auth.CheckUserLoginStatusUseCase
+import com.androminor.mangaapp.domain.usecase.auth.CreateAccountUseCase
+import com.androminor.mangaapp.domain.usecase.auth.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Created by Varun Singh
  */
 @HiltViewModel
-open class SignInViewModel @Inject constructor(
+class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val createAccountUseCase: CreateAccountUseCase,
     private val checkUserLoginStatusUseCase: CheckUserLoginStatusUseCase

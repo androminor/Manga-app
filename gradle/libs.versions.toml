@@ -11,7 +11,6 @@ converterGson = "2.9.0"
 coreKtxVersion = "1.16.0"
 espressoCoreVersion = "3.6.1"
 hiltAndroid = "2.56"
-hiltAndroidCompiler = "2.52"
 hiltNavigationComposeVersion = "1.2.0"
 kotlin = "2.1.20"
 junit = "4.13.2"
@@ -23,21 +22,24 @@ lifecycleRuntimeKtxVersion = "2.8.7"
 loggingInterceptor = "4.12.0"
 navigationCompose = "2.8.9"
 okhttp = "4.12.0"
+pagingVersion = "3.3.6"
 retrofit = "2.11.0"
 roomCompilerVersion = "2.7.0"
 roomKtxVersion = "2.7.0"
 roomRuntimeVersion = "2.7.0"
 tasksVision = "latest.release"
 hilt_navigation_compose = "1.2.0"
-compose-ui = "1.0.0"
-
-
+compose-ui = "1.7.8"
+roomPagingVersion = "2.7.0"
+ksp = "2.1.20-1.0.31"
 
 
 [libraries]
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose-ui" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose-ui" }
 androidx-activity-compose-v172 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingVersion" }
+androidx-paging-runtime-v311 = { module = "androidx.paging:paging-runtime", version.ref = "pagingVersion" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
@@ -60,7 +62,6 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtxV
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 #noinspection SimilarGradleDependency
 hilt-android-v244 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -84,6 +85,7 @@ material-icons-extended = { module = "androidx.compose.material:material-icons-e
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 #noinspection SimilarGradleDependency
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt_navigation_compose" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPagingVersion" }
 
 
 [plugins]
@@ -93,5 +95,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 #noinspection SimilarGradleDependency
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #noinspection SimilarGradleDependency
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt_android_plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }

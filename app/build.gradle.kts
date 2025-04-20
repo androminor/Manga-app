@@ -1,11 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android.plugin)
     alias(libs.plugins.compose.compiler)
-
-
+    alias(libs.plugins.ksp.plugin)
 }
 
 android {
@@ -53,18 +51,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    viewBinding {
-        enable = true
-    }
-    buildFeatures {
-        dataBinding = true
-    }
 
 }
 
 
 dependencies {
-    val compose_version = "1.5.0"
 
     // Core Android
     implementation(libs.androidx.core.ktx.v1101)
@@ -81,18 +72,22 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.material.icons.extended)
     // Navigation
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android.v244)
+    implementation(libs.androidx.hilt.navigation.compose.v100)
+
     // Hilt
     implementation(libs.hilt.android.v244)
     implementation(libs.androidx.hilt.navigation.compose.v100)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler) // Add this line to use KSP for Hilt compiler
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     // Room
     implementation(libs.androidx.room.runtime)
     //noinspection KaptUsageInsteadOfKsp
-    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
     // Retrofit & OkHttp
@@ -128,9 +123,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.util)
 
+    //paging
+    implementation(libs.androidx.paging.runtime.v311)
+    implementation(libs.androidx.paging.common)
+    implementation(libs.androidx.room.paging)
 
-}
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
+
 }
