@@ -8,9 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.androminor.mangaapp.domain.usecase.auth.GetLoggedInUserUseCase
 import com.androminor.mangaapp.domain.usecase.auth.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,19 +22,9 @@ class HomeViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase
 ) : ViewModel() {
 
-    private val _userName = MutableStateFlow<String?>(null)
-    val userName: StateFlow<String?> = _userName.asStateFlow()
-
     private val _isLoggedOut = mutableStateOf(false)
     val isLoggedOut: State<Boolean> get() = _isLoggedOut
 
-    init {
-        viewModelScope.launch {
-            getLoggedInUserUseCase().collect { user ->
-                _userName.value = user?.email
-            }
-        }
-    }
 
     fun signOut() {
         viewModelScope.launch {

@@ -1,11 +1,16 @@
 package com.androminor.mangaapp.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.androminor.mangaapp.presentation.home.HomeScreen
 import com.androminor.mangaapp.presentation.signin.SignInScreen
+import com.androminor.mangaapp.presentation.signin.SignInViewModel
 
 /**
  * Created by Varun Singh
@@ -14,7 +19,7 @@ import com.androminor.mangaapp.presentation.signin.SignInScreen
     sealed class Screen(val route: String) {
         data object SignIn : Screen("signin")
         data object Manga : Screen("manga")
-        data object MangaDetail:Screen("manga detail")
+        data object MangaDetail:Screen("manga_detail")
         data object Face:Screen("face")
     }
 
@@ -24,6 +29,16 @@ import com.androminor.mangaapp.presentation.signin.SignInScreen
         startDestination: String = Screen.SignIn.route
     ) {
         val navController = rememberNavController()
+        val signInViewModel: SignInViewModel = hiltViewModel()
+
+        LaunchedEffect(key1 = Unit) {
+            val isLoggedIn = signInViewModel.checkLoginStatus()
+            if (isLoggedIn) {
+                navController.navigate(Screen.Manga.route) {
+                    popUpTo(Screen.SignIn.route) { inclusive = true }
+                }
+            }
+        }
         NavHost(
             navController = navController,
             startDestination = startDestination,
@@ -39,19 +54,8 @@ import com.androminor.mangaapp.presentation.signin.SignInScreen
                 )
 
             }
+            composable(Screen.Manga.route){
 
-            /* val navController = rememberNavController()
-
-        NavHost(navController = navController, startDestination = Screen.SignIn.route) {
-            composable(Screen.SignIn.route) {
-                SignInScreen(
-                    viewModel = signInViewModel,
-                    onNavigatingHome = {
-                        navController.navigate(Screen.Manga.route) {
-                            popUpTo(Screen.SignIn.route) { inclusive = true }
-                        }
-                    }
-                )
             }
 
             composable(Screen.Manga.route) {
@@ -62,6 +66,6 @@ import com.androminor.mangaapp.presentation.signin.SignInScreen
                     }
                 })
             }
-        }*/
+
         }
     }

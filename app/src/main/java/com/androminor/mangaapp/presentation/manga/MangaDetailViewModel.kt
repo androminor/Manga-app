@@ -1,3 +1,5 @@
+package com.androminor.mangaapp.presentation.manga
+
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

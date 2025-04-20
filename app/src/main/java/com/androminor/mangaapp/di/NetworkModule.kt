@@ -1,10 +1,10 @@
 package com.androminor.mangaapp.di
 
-import ConnectivityObserver
-import NetworkChecker
 import android.content.Context
 import com.androminor.mangaapp.data.remote.MangaApi
+import com.androminor.mangaapp.network.util.ConnectivityObserver
 import com.androminor.mangaapp.network.util.Constants
+import com.androminor.mangaapp.network.util.NetworkChecker
 import com.androminor.mangaapp.network.util.RapidApiInterceptor
 import dagger.Module
 import dagger.Provides

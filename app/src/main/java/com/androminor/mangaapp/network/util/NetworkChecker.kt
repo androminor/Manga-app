@@ -1,3 +1,5 @@
+package com.androminor.mangaapp.network.util
+
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
