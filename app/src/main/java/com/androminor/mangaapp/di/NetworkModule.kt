@@ -31,7 +31,7 @@ object NetworkModule {
     fun provideRapidApiInterceptor(): Interceptor {
         return RapidApiInterceptor(
             apikey = Constants.API_KEY,
-            apiHost = Constants.BASE_URL
+            apiHost = Constants.API_HOST
         )
     }
 

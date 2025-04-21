@@ -25,8 +25,9 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "Manga database"
-
-        ).build()
+        )
+            .fallbackToDestructiveMigration(false)  // This will clear DB if version changes without migration
+            .build()
     }
 
     @Provides

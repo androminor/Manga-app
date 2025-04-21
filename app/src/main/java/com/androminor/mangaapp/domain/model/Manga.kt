@@ -5,7 +5,7 @@ data class Manga(
     val title: String,
     val subTitle: String,
     val status: String,
-    val thumbnailUrl: String,
+    val thumb: String,
     val summary: String,
     val authors: List<String>,
     val genres: List<String>,

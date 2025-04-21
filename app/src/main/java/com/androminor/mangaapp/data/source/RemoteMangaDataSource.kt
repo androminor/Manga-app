@@ -9,6 +9,6 @@ import javax.inject.Inject
  */
 class RemoteMangaDataSource @Inject constructor(private val apiService:MangaApi) {
 suspend fun fetchManga(page:Int):List<MangaEntity>{
-    return apiService.fetchManga(page).data.map { it.toEntity(page) }
+    return apiService.fetchManga(page).data.mapNotNull { it.toEntity(page) }
 }
 }

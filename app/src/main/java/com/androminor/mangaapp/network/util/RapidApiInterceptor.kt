@@ -10,8 +10,8 @@ class RapidApiInterceptor(private val apikey: String, private val apiHost:String
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request().newBuilder()
-            .addHeader("X-RapiAPI-Key",apikey)
-            .addHeader("X-RapiAPI-Key",apiHost)
+            .addHeader("X-RapidAPI-Key",apikey)
+            .addHeader("X-RapidAPI-Host", apiHost)
             .build()
         return chain.proceed(request)
 

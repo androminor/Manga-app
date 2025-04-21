@@ -16,4 +16,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="welcome_to_zenithra">Welcome to Zenithra!</string>
     <string name="manga">Manga</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="error_loading_more_data">Error loading more data</string>
+    <string name="author_format">Author format</string>
+
 </resources>

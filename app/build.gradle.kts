@@ -127,6 +127,11 @@ dependencies {
     implementation(libs.androidx.paging.runtime.v311)
     implementation(libs.androidx.paging.common)
     implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.paging.compose)
+
+    //glide
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 
 
 }

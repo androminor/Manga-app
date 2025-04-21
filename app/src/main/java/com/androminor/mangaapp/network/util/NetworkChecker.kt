@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
@@ -44,6 +45,7 @@ class NetworkChecker @Inject constructor(private val context: Context) : Connect
         connectivityManager.registerNetworkCallback(networkRequest, callback)
         trySend(isNetworkAvailable())
 
+        awaitClose { }
     }
 
     private fun isNetworkAvailable(): Boolean {

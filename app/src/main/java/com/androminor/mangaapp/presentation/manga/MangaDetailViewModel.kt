@@ -33,7 +33,7 @@ class MangaDetailViewModel @Inject constructor(
                 }
             }
             .onStart { emit(MangaDetailUiState.Loading) }
-            .catch { e -> emit(MangaDetailUiState.Error(e.message ?: "Unknow error")) }
+            .catch { e -> emit(MangaDetailUiState.Error(e.message ?: "Unknown error")) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),

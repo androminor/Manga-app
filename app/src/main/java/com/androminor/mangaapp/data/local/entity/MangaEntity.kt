@@ -12,7 +12,7 @@ data class MangaEntity(
     val title:String,
     val subTitle:String,
     val status:String,
-    val thumbnailUrl:String,
+    val thumb:String,
     val summary:String,
     val authors:String,
     val genres:String,

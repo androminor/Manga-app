@@ -32,6 +32,7 @@ hilt_navigation_compose = "1.2.0"
 compose-ui = "1.7.8"
 roomPagingVersion = "2.7.0"
 ksp = "2.1.20-1.0.31"
+paging-compose = "3.3.6"
 
 
 [libraries]
@@ -86,7 +87,7 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 #noinspection SimilarGradleDependency
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt_navigation_compose" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPagingVersion" }
-
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
