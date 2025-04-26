@@ -1,6 +1,6 @@
-package com.androminor.mangaapp.presentation.manga
+    package com.androminor.mangaapp.presentation.manga
 
-import NavigationItem
+    import BottomNavController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,14 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.HomeMax
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,166 +31,172 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.androminor.mangaapp.presentation.navigation.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MangaDetailScreen(
-    viewModel: MangaDetailViewModel = hiltViewModel(),
-) {
+    @Composable
+    fun MangaDetailScreen(
+        viewModel: MangaDetailViewModel = hiltViewModel(),
+        navController: NavController,
+        mangaId: String,
+        selectedTab: Int,
+        onTabSelected: (Int) -> Unit
+    ) {
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val items = listOf(
-        NavigationItem("Manga", Icons.Default.HomeMax, Screen.Home.route),
-        NavigationItem("Face", Icons.Default.Face, Screen.Face.route)
-    )
-    val selectedTab = 0
 
-    Scaffold(
-        containerColor = Color(0xFF212121),  // Dark Brown
-        bottomBar = {
-            NavigationBar(
-                containerColor = Color(0xFF212121),  // Dark Brown
-                contentColor = Color.White,
-                modifier = Modifier.height(56.dp)
-            ) {
-                items.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        selected = selectedTab == index,
-                        onClick = { /* No-op since we don't navigate from detail screen */ },
-                        icon = {
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        Scaffold(
+            containerColor = Color(0xFF212121),
+     /*       topBar = {
+                TopAppBar(
+                    title = { *//* Empty title *//* },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xFF212121),
+                        titleContentColor = Color.White,
+                    ),
+                    navigationIcon = {
+                        // Add back button if needed
+                        IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.title,
-                                tint = if (selectedTab == index) Color.White else Color.Gray
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.White
                             )
-                        },
-                        label = {
-                            Text(
-                                text = item.title,
-                                color = if (selectedTab == index) Color.White else Color.Gray,
-                                style = MaterialTheme.typography.h6
+                        }
+                    },
+                    actions = {
+                        // Star icon in the top right corner
+                        IconButton(onClick = { *//* Favorite action *//* }) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = "Favorite",
+                                tint = Color.White
                             )
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.White,
-                            unselectedIconColor = Color.Gray,
-                            selectedTextColor = Color.White,
-                            unselectedTextColor = Color.Gray,
-                            indicatorColor = Color.Transparent
-                        )
-                    )
-                }
+                        }
+                    }
+                )
+            },*/
+            bottomBar = {
+                BottomNavController(
+                    navController = navController,
+                    selectedTab = selectedTab,
+                    onTabSelected = {tab ->
+                    if(tab==0){
+                        // Do nothing when clicking on Manga tab since we're already in a Manga screen
+                        // This prevents going back to HomeScreen
+                        onTabSelected(0)
+
+
+                    }
+                    else onTabSelected(tab)}
+                )
             }
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(Color(0xFF212121))  // Dark Brown for the Box
-        ) {
-            when (uiState) {
-                is MangaDetailUiState.Loading -> {
-                    CircularProgressIndicator(
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .background(Color(0xFF212121))
+            ) {
+                when (uiState) {
+                    is MangaDetailUiState.Loading -> {
+                        CircularProgressIndicator(
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
 
-                is MangaDetailUiState.Success -> {
-                    val manga = (uiState as MangaDetailUiState.Success).manga
-                    val paras = manga.summary.split("\n\n")
+                    is MangaDetailUiState.Success -> {
+                        val manga = (uiState as MangaDetailUiState.Success).manga
+                        val paras = manga.summary.split("\n\n")
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                            .padding(16.dp)
-                            .padding(top = 32.dp)
-                    ) {
-                        // Top section with image on left, title to the right
-                        Row(
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(IntrinsicSize.Min)
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .padding(16.dp)
                         ) {
-                            // Left side - Manga cover image
-                            AsyncImage(
-                                model = manga.thumb,
-                                contentDescription = manga.title,
-                                contentScale = ContentScale.Crop,
+                            // Top section with image on left, title to the right
+                            Row(
                                 modifier = Modifier
-                                    .width(180.dp)
-                                    .aspectRatio(3f / 4f)
-                            )
-
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            // Right side - Title only
-                            Column(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .align(Alignment.Top)
+                                    .fillMaxWidth()
+                                    .height(IntrinsicSize.Min)
                             ) {
+                                // Left side - Manga cover image
+                                AsyncImage(
+                                    model = manga.thumb,
+                                    contentDescription = manga.title,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .width(180.dp)
+                                        .aspectRatio(3f / 4f)
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                // Right side - Title only
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .align(Alignment.Top)
+                                ) {
+                                    Text(
+                                        text = manga.title,
+                                        fontWeight = FontWeight.Bold,
+                                        style = MaterialTheme.typography.h5,
+                                        color = Color.White
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    // Subtitle (using authors as subtitle)
+                                    Text(
+                                        text = manga.authors.joinToString(", "),
+                                        fontWeight = FontWeight.Normal,
+                                        style = MaterialTheme.typography.subtitle1,
+                                        color = Color.White
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+                            paras.forEach { paragraph ->
+                                // Summary
                                 Text(
-                                    text = manga.title,
-                                    fontWeight = FontWeight.Bold,
-                                    style = MaterialTheme.typography.h5,
-                                    color = Color.White
+                                    text = paragraph,
+                                    fontWeight = FontWeight.Normal,
+                                    style = MaterialTheme.typography.body1,
+                                    color = Color.White,
+                                    lineHeight = 24.sp
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
-
-                                // Subtitle (using authors as subtitle)
-                                Text(
-                                    text = manga.authors.joinToString(", "),
-                                    fontWeight = FontWeight.Normal,
-                                    style = MaterialTheme.typography.subtitle1,
-                                    color = Color.White
-                                )
                             }
                         }
+                    }
 
-                        Spacer(modifier = Modifier.height(16.dp))
-                    paras.forEach { paragraph ->
-                        // Summary
+                    is MangaDetailUiState.Error -> {
+                        val message = (uiState as MangaDetailUiState.Error).message
                         Text(
-                            text = paragraph,
-                            fontWeight = FontWeight.Normal,
-                            style = MaterialTheme.typography.body1,
-                            color = Color.White,
-                            lineHeight = 24.sp  // Adjust the value as needed
+                            text = message,
+                            color = Color.Red,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.Center)
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-
                     }
+
+                    MangaDetailUiState.Empty -> {
+                        Text(
+                            text = "No manga found",
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.Center)
+                        )
                     }
-                }
-
-                is MangaDetailUiState.Error -> {
-                    val message = (uiState as MangaDetailUiState.Error).message
-                    Text(
-                        text = message,
-                        color = Color.Red,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .align(Alignment.Center)
-                    )
-                }
-
-                MangaDetailUiState.Empty -> {
-                    Text(
-                        text = "no manga found",
-                        textAlign = TextAlign.Center,
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .align(Alignment.Center)
-                    )
                 }
             }
         }
     }
-}

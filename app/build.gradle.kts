@@ -52,6 +52,8 @@ android {
         }
     }
 
+ androidResources {
+     noCompress += "tflite" }
 }
 
 
@@ -133,5 +135,18 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.core)
+
+
+    // MediaPipe
+    implementation(libs.google.mediapipe.tasks.vision)
+
+    // Accompanist
+    implementation(libs.google.accompanist.permissions)
+    //tensor-flow lite
+    implementation(libs.tensorflow.lite)
 
 }

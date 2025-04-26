@@ -9,9 +9,9 @@ import com.androminor.mangaapp.domain.usecase.auth.LogOutUseCase
 import com.androminor.mangaapp.domain.usecase.auth.SaveLoggedUserUseCase
 import com.androminor.mangaapp.domain.usecase.auth.SignInUseCase
 import com.androminor.mangaapp.domain.usecase.manga.CheckMangaDataStatsUseCase
-import com.androminor.mangaapp.domain.usecase.manga.ObserveDetailByIdUseCase
 import com.androminor.mangaapp.domain.usecase.manga.GetMangaUseCase
 import com.androminor.mangaapp.domain.usecase.manga.GetMangasPaginationDataUseCase
+import com.androminor.mangaapp.domain.usecase.manga.ObserveDetailByIdUseCase
 import com.androminor.mangaapp.domain.usecase.manga.RefreshMangaListUseCase
 import dagger.Module
 import dagger.Provides
@@ -94,4 +94,5 @@ class AppModule {
     fun provideRefreshMangaListUseCase(mangaRepository: MangaRepository): RefreshMangaListUseCase {
         return RefreshMangaListUseCase(mangaRepository)
     }
+
 }

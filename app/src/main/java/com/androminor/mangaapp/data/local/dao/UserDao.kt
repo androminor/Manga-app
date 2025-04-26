@@ -19,7 +19,7 @@ interface UserDao {
     suspend fun getUserId(id:Long):UserEntity?
 
     @Query("SELECT * FROM users WHERE isLoggedIn = 1 LIMIT 1")
-    fun getLoggedInUser(): Flow<UserEntity>
+    fun getLoggedInUser(): Flow<UserEntity?>
 
     @Query("Update users SET isLoggedIn =1 WHERE id = :userId ")
     suspend fun setUserLoggedIn(userId: Long)

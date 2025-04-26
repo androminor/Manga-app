@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MangaViewModel @Inject constructor(
     private val checkMangaDataStatsUseCase: CheckMangaDataStatsUseCase,
-    private val getMangasPaginationDataUseCase: GetMangasPaginationDataUseCase,
+    getMangasPaginationDataUseCase: GetMangasPaginationDataUseCase,
     private val refreshMangaListUseCase: RefreshMangaListUseCase,
     private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {

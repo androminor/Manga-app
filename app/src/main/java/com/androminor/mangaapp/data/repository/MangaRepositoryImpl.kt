@@ -23,19 +23,20 @@ class MangaRepositoryImpl @Inject constructor(
     override fun getMangasPagingData(): Flow<PagingData<Manga>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5,         // Load 15 items per page
-                prefetchDistance = 5,  // Start loading when 10 items away from the end
-                initialLoadSize = 10,   // Load 30 items initially
+                pageSize = 20,             // Fetch 20 items at once
+                prefetchDistance = 10,     // Preload next 10 when close to end
+                initialLoadSize = 40,      // Load 2 pages on first load
                 enablePlaceholders = false,
-                maxSize = 50          // Limit cached items to prevent memory issues
+                maxSize = 100              // Store up to 100 items in memory
             ),
             pagingSourceFactory = { localMangaDataSource.getAllMangasPagingSource() }
         ).flow.map { pagingData ->
-            pagingData.map { mangaEntity -> mangaEntity.toDomain() }
+            pagingData.map { it.toDomain() }
         }
-    }
+        }
 
-    override suspend fun refreshMangaList() {
+
+        override suspend fun refreshMangaList() {
         try {
             val lastLocalPage = localMangaDataSource.getLastPage()
             var page = lastLocalPage + 1

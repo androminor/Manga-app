@@ -48,6 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -70,27 +71,27 @@ fun SignInScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121212))
+            .background(Color.Black)
     ) {
         //close button
-        Icon(imageVector = Icons.Default.Close,
+        Icon(
+            imageVector = Icons.Default.Close,
             contentDescription = stringResource(R.string.close),
             tint = Color.White,
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.TopStart)
                 .clickable { //later action will be handled
-                })
+                }
+        )
         Box(
             modifier = Modifier
-                .fillMaxWidth(
-                    (0.9f)
-                )
+                .fillMaxWidth(0.9f)
                 .padding(vertical = 32.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color(0xFF252525))
+                .background(Color(0xFF323232))
                 .align(Alignment.Center)
-        ){
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -104,11 +105,13 @@ fun SignInScreen(
                     fontSize = 23.sp,
                     fontWeight = FontWeight.Light
                 )
-                Text(text = "Welcome back",
+                Text(
+                    text = stringResource(R.string.welcome_back), // Using string resource
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top =8.dp))
+                    modifier = Modifier.padding(top = 8.dp)
+                )
                 Text(
                     text = stringResource(R.string.please_enter_your_details_to_sign_in),
                     color = Color.White.copy(alpha = 0.7f),
@@ -117,7 +120,6 @@ fun SignInScreen(
                     modifier = Modifier.padding(top = 4.dp, bottom = 24.dp)
                 )
                 //Social
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -136,7 +138,6 @@ fun SignInScreen(
                             painter = painterResource(id = R.drawable.ic_google),
                             contentDescription = stringResource(R.string.sign_in_with_google),
                             modifier = Modifier.size(24.dp)
-
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
@@ -183,8 +184,15 @@ fun SignInScreen(
                 OutlinedTextField(
                     value = state.email,
                     onValueChange = { viewModel.onEvent(StatefulEvent.EmailChanged(it)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text(stringResource(R.string.your_email_address)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, Color.White, RoundedCornerShape(8.dp)), // White border
+                    placeholder = {
+                        Text(
+                            stringResource(R.string.your_email_address),
+                            color = Color.White // White placeholder text
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
@@ -192,13 +200,14 @@ fun SignInScreen(
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         textColor = Color.White,
                         backgroundColor = Color.Transparent,
+                        focusedBorderColor = Color.White, // White focused border
+                        unfocusedBorderColor = Color.White, // White unfocused border
                         focusedLabelColor = Color.White,
-                        unfocusedLabelColor = Color.Gray,
-                        placeholderColor = Color.Gray
+                        unfocusedLabelColor = Color.White, // White label
+                        placeholderColor = Color.White // White placeholder
                     ),
                     shape = RoundedCornerShape(8.dp),
                     singleLine = true
-
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -206,8 +215,15 @@ fun SignInScreen(
                 OutlinedTextField(
                     value = state.password,
                     onValueChange = { viewModel.onEvent(StatefulEvent.PasswordChanged(it)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text(stringResource(R.string.password)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, Color.White, RoundedCornerShape(8.dp)), // White border
+                    placeholder = {
+                        Text(
+                            stringResource(R.string.password),
+                            color = Color.White // White placeholder text
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
@@ -220,23 +236,21 @@ fun SignInScreen(
                             Icon(
                                 imageVector = icon,
                                 contentDescription = stringResource(R.string.toggle_password),
-                                tint = Color.Gray
+                                tint = Color.White
                             )
-
                         }
-
-
                     },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         textColor = Color.White,
                         backgroundColor = Color(0xFF303030),
+                        focusedBorderColor = Color.White, // White focused border
+                        unfocusedBorderColor = Color.White, // White unfocused border
                         focusedLabelColor = Color.Transparent,
                         unfocusedLabelColor = Color.Transparent,
-                        placeholderColor = Color.Gray
+                        placeholderColor = Color.White // White placeholder
                     ),
                     shape = RoundedCornerShape(8.dp),
                     singleLine = true
-
                 )
                 //Forgot password
                 Box(
@@ -245,10 +259,13 @@ fun SignInScreen(
                         .padding(top = 4.dp),
                     contentAlignment = Alignment.CenterEnd
                 ) {
-                    Text(text = "Forgot password?",
-                        color = Color.Gray,
-                        fontSize = 14.sp,
-                        modifier = Modifier.clickable { viewModel.onEvent(BehaviouralEvent.ForgetPassword) })
+                    Text(
+                        text = stringResource(R.string.forgot_password),
+                        color = Color(0xFF78909C), // White text
+                        fontSize = 12.sp,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable { viewModel.onEvent(BehaviouralEvent.ForgetPassword) }
+                    )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -262,7 +279,6 @@ fun SignInScreen(
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF505050)
                     )
-
                 ) {
                     if (state.isLoading) {
                         CircularProgressIndicator(
@@ -270,9 +286,9 @@ fun SignInScreen(
                             modifier = Modifier.size(24.dp)
                         )
                     } else {
-                        Text(stringResource(R.string.sign_in))
+                        Text(stringResource(R.string.sign_in),
+                            color = Color(0xFFBDBDBD))
                     }
-
                 }
                 //Error msg
                 if (state.error != null) {
@@ -293,10 +309,11 @@ fun SignInScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.don_t_have_an_account),
-                        color = Color.Gray,
+                        color = Color.White, // White text
                         fontSize = 14.sp
                     )
-                    Text(text = stringResource(R.string.sign_up),
+                    Text(
+                        text = stringResource(R.string.sign_up),
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
@@ -307,6 +324,5 @@ fun SignInScreen(
                 }
             }
         }
-
     }
 }
