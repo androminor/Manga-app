@@ -17,7 +17,7 @@ import javax.inject.Inject
  * Created by Varun Singh
  */
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class AuthHomeViewModel @Inject constructor(
     private val getLoggedInUserUseCase: GetLoggedInUserUseCase,
     private val logOutUseCase: LogOutUseCase
 ) : ViewModel() {

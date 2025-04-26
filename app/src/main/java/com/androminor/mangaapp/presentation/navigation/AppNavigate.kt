@@ -16,8 +16,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.androminor.mangaapp.presentation.face.FaceScreen
+import com.androminor.mangaapp.presentation.home.AuthHomeViewModel
 import com.androminor.mangaapp.presentation.home.HomeScreen
-import com.androminor.mangaapp.presentation.home.HomeViewModel
 import com.androminor.mangaapp.presentation.manga.MangaDetailScreen
 import com.androminor.mangaapp.presentation.signin.SignInScreen
 import com.androminor.mangaapp.presentation.signin.SignInViewModel
@@ -37,16 +37,16 @@ fun AppNavigate(
     val navController = rememberNavController()
     val signInViewModel: SignInViewModel = hiltViewModel()
     var selectedTab by remember { mutableIntStateOf(0) }
-    val homeViewModel: HomeViewModel = hiltViewModel()
+    val authHomeViewModel: AuthHomeViewModel = hiltViewModel()
 
-    val isLoggedOut by homeViewModel.isLoggedOut
+    val isLoggedOut by authHomeViewModel.isLoggedOut
 
     LaunchedEffect(isLoggedOut) {
         if (isLoggedOut) {
             navController.navigate(Screen.SignIn.route) {
                 popUpTo(Screen.Home.route) { inclusive = true }
             }
-            homeViewModel.resetLogOut()
+            authHomeViewModel.resetLogOut()
         }
     }
 
@@ -95,7 +95,7 @@ fun AppNavigate(
         composable(Screen.Home.route) {
             // Pass the shared homeViewModel
             HomeScreen(
-                homeViewModel = homeViewModel,
+                authHomeViewModel = authHomeViewModel,
                 navController = navController,
                 selectedTab = selectedTab,
                 onTabSelected = {
@@ -106,21 +106,17 @@ fun AppNavigate(
 
         composable(Screen.Face.route) {
             FaceScreen(
-                selectedTab = selectedTab,
-                onBackToHome = {
-                    val backStackEntry = navController.previousBackStackEntry
-                    // Check if we have a back stack entry from manga detail
-                    if (backStackEntry?.destination?.route?.startsWith("manga_detail") == true) {
-                        // Go back to the manga detail screen
-                        navController.popBackStack()
-                    } else {
+                selectedTab = 1,
+                onTabSelected = { selectedTab ->
+                    // Handle tab selection
+                    if (selectedTab == 0) {
                         navController.navigate(Screen.Home.route) {
-                            popUpTo(Screen.Face.route) {
-                                inclusive = true
-                            }
+                            popUpTo(Screen.Face.route) { inclusive = true }
+                            launchSingleTop = true
                         }
                     }
-                }
+                },
+                navController = navController
             )
 
         }

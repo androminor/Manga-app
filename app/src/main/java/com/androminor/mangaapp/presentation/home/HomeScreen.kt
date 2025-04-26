@@ -44,20 +44,20 @@ import com.androminor.mangaapp.presentation.navigation.Screen
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    authHomeViewModel: AuthHomeViewModel = hiltViewModel(),
     mangaViewModel: MangaViewModel = hiltViewModel(),
     navController: NavController,
     selectedTab: Int,
     onTabSelected: (Int) -> Unit
 ) {
-    val isLoggedOut by homeViewModel.isLoggedOut
+    val isLoggedOut by authHomeViewModel.isLoggedOut
 
     if (isLoggedOut) {
         Log.d("HomeScreen", "Detected logout state, navigating to sign in")
         navController.navigate(Screen.SignIn.route) {
             popUpTo(Screen.Home.route) { inclusive = true }
         }
-        homeViewModel.resetLogOut()
+        authHomeViewModel.resetLogOut()
     }
 
     Scaffold(

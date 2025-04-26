@@ -48,7 +48,9 @@ fun BottomNavController(
             route = Screen.Face.route
         )
     )
-
+    val iconContainerWidth = 60.dp
+    val iconContainerHeight = 36.dp
+    val fixedIconSize = 20.dp
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,9 +72,8 @@ fun BottomNavController(
                 // Icon with background
                 Box(
                     modifier = Modifier
-                        .width(60.dp)
-                        .height(36.dp)
-                        .size(40.dp)
+                        .width(iconContainerWidth)
+                        .height(iconContainerHeight)
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color(0xFF333333))
                         .clickable {
@@ -94,9 +95,9 @@ fun BottomNavController(
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_menu_book_24),
                         contentDescription = "Manga",
-                        //tint = if (selectedTab == 0) Color.White else Color.Gray,
+                        // tint = if (selectedTab == 0) Color.White else Color.Gray,
                         tint = Color.White,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(fixedIconSize)
                     )
                 }
 

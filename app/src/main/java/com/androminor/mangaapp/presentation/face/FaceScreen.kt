@@ -1,5 +1,6 @@
 package com.androminor.mangaapp.presentation.face
 
+import BottomNavController
 import FaceDetectionViewModel
 import android.Manifest
 import android.graphics.Bitmap
@@ -18,22 +19,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,13 +40,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -60,7 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.androminor.mangaapp.R
+import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -111,8 +103,9 @@ fun ImageProxy.toBitmapWithRotation(isFrontCamera: Boolean): Bitmap {
 @Composable
 fun FaceScreen(
     viewModel: FaceDetectionViewModel = hiltViewModel(),
-    selectedTab:Int,
-    onBackToHome: () -> Unit
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,  // Add this parameter
+    navController: NavController
 ) {
     val hasCameraPermission by viewModel.hasCameraPermission.collectAsState()
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
@@ -125,72 +118,11 @@ fun FaceScreen(
         containerColor = Color.Black,
         bottomBar = {
             // Custom bottom navigation bar matching the design from screenshots
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF212121))
-                    .height(60.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    ) {
-                        // Manga Tab
-                        Box(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(36.dp)
-                                .size(40.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(Color.Transparent)
-                                .clickable { onBackToHome() }
-                                .padding(horizontal = 24.dp, vertical = 8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_menu_book_24),
-                                contentDescription = "Manga",
-                                tint = if (selectedTab == 0) Color.Gray else Color.White,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                        // Small space between icon and text
-                        Spacer(modifier = Modifier.height(4.dp))
-
-                        Text(
-                            text = "Manga",
-                            color = if(selectedTab==0)Color.White else Color.Gray,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                    }
-
-
-                    // Face Tab (selected)
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color.White)
-                            .padding(horizontal = 24.dp, vertical = 8.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Face",
-                            color = Color.Black,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                    }
-                }
-            }
+            BottomNavController(
+                navController = navController,
+                selectedTab = selectedTab,
+                onTabSelected = onTabSelected
+            )
         }
     ) { paddingValues ->
         Box(
