@@ -117,6 +117,21 @@ fun AppNavigate(
                     }
                 },
                 navController = navController
+                /*selectedTab = selectedTab,
+                onBackToHome = {
+                    val backStackEntry = navController.previousBackStackEntry
+                    // Check if we have a back stack entry from manga detail
+                    if (backStackEntry?.destination?.route?.startsWith("manga_detail") == true) {
+                        // Go back to the manga detail screen
+                        navController.popBackStack()
+                    } else {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Face.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }*/
             )
 
         }
